@@ -1,0 +1,24 @@
+{
+  "name": "generator-android-architecture-with-templates",
+  "version": "0.0.1",
+  "description": "Criar aplicações utilizando templates",
+  "main": "app/index.js",
+  "keywords": [
+    "Android",
+    "Java",
+    "Architecture",
+    "yeoman-generator"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amauri Rodrigues de Souza Jr",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^3.2.3",
+    "yeoman-generator": "^1.1.1"
+  },
+  "files": [
+    "app"
+  ]
+}
