@@ -8,11 +8,10 @@ module.exports
 
         var json = JSON.parse(response.body) 
 
-        var templates = formattTemplateCollection(json.templates)
-
-        console.log(templates)
-
-        actionSucess(templates)
+        actionSucess({
+            templatesSimpleList:   formattTemplateCollection(json.templates),
+            templatesFullInfo:  json.templates
+        })
 
     })
 }
@@ -20,7 +19,7 @@ module.exports
 var formattTemplateCollection = (templateArray) => {
     var formatedArray = []
     templateArray.forEach(function(element) {        
-        formatedArray.push(element.title + ' ' + element.description)
+        formatedArray.push(element.title)
     });
     return formatedArray
 }

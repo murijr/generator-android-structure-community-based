@@ -1,7 +1,7 @@
 module.exports
 .start = (generator, templateList) => {
 
-    generator.prompt(
+    return generator.prompt(
         [
 
             {
@@ -27,7 +27,7 @@ module.exports
             },{
                 name: "select_template_project",
                 message: "Which project template you want to use ?",
-                type: "list",
+                type: "rawlist",
                 choices: templateList
             }
 
