@@ -1,9 +1,16 @@
 var Generator = require('yeoman-generator');
-
+var repositoryService = require('./service/repository.js')
 module.exports = class extends Generator {
 
-    method1() {
-        this.log('method 1 just ran');
+    prompting() {
+        this.log("prompting")
+        repositoryService.getPublicTemplates(
+            (templatesList) => {
+                
+                
+
+            }
+        )
     }
     
 };
