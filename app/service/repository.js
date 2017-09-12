@@ -6,11 +6,21 @@ module.exports
     unirest.get('https://raw.githubusercontent.com/murijr/android-templates-records/master/templates.json')
     .end((response) => {
 
-        var jsonTemplates = JSON.parse(response.body) 
+        var json = JSON.parse(response.body) 
 
-        console.log(jsonTemplates.templates)
+        var templates = formattTemplateCollection(json.templates)
 
-        actionSucess(jsonTemplates.templates)
+        console.log(templates)
+
+        actionSucess(templates)
 
     })
+}
+
+var formattTemplateCollection = (templateArray) => {
+    var formatedArray = []
+    templateArray.forEach(function(element) {        
+        formatedArray.push(element.title + ' ' + element.description)
+    });
+    return formatedArray
 }
