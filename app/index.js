@@ -1,5 +1,6 @@
 var Generator = require('yeoman-generator');
 var fs = require('fs');
+var git = require('git-cli').Repository
 var repositoryService = require('./service/repository.js')
 var buildProjectAsks = require('./ask/build_project.js')
 module.exports = class extends Generator {
@@ -15,8 +16,7 @@ module.exports = class extends Generator {
 
                     fs.mkdir('./templates', () => {
                         
-
-
+                        git.clone(templateInfo.repository_url, './templates/' + responses.project_name)
 
                     })
 

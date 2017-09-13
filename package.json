@@ -15,6 +15,7 @@
   "author": "Amauri Rodrigues de Souza Jr",
   "license": "ISC",
   "dependencies": {
+    "git-cli": "^0.10.0",
     "inquirer": "^3.2.3",
     "unirest": "^0.5.1",
     "yeoman-generator": "^1.1.1"

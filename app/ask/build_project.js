@@ -5,7 +5,7 @@ module.exports
         [
 
             {
-                name: "get_project_name",
+                name: "project_name",
                 message: "What is the name of the project ? ",
                 type: "input",
                 validate: function (input) {
@@ -15,7 +15,7 @@ module.exports
                     return 'Invalid Project name: ' + input + '. Try again.' ;
                 }            
             },{
-                name: "get_package_name",
+                name: "package_name",
                 message: "What is the name of the project package ? ",
                 type: "input",
                 validate: function (input) {
