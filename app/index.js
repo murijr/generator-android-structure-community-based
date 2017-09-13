@@ -22,56 +22,62 @@ module.exports = class extends Generator {
 
                     const templateInfo = getTemplateSelectedInfo(responses.select_template_project, repository.templatesFullInfo)
 
+                    const templateBranchRepo = (templateInfo.repository_branch) ? templateInfo.repository_branch : 'master'
+
                     fs.removeSync('./templates')
 
                     fs.mkdirSync('./templates')
                         
                     git
                     .clone(templateInfo.repository_url, './templates/' + responses.project_name)
-                    .then(() => {
+                    .then((gitRepo) => {
 
-                        glob("./templates/**/AndroidManifest.xml", null, function (er, files) {
+                        gitRepo.checkout(templateBranchRepo).then(() => {
 
-                            const basePath = files[0].split('src')[0]
-                            
-                            const manifestXml = fs.readFileSync(files[0])
+                            glob("./templates/**/AndroidManifest.xml", null, (er, files) => {
 
-                            const jsonManifest = parser.toJson(manifestXml, {object: true});
+                                const basePath = files[0].split('src')[0]
+                                
+                                const manifestXml = fs.readFileSync(files[0])
 
-                            const packageDestin = responses.package_name.split('.').join('/')
-                            const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
+                                const jsonManifest = parser.toJson(manifestXml, {object: true});
 
-                            const pathMainDestin = basePath + 'src/main/java/' + packageDestin
-                            const pathAndroidTestDestin = basePath + 'src/androidTest/java/' + packageDestin
-                            const pathTestDestin = basePath + 'src/test/java/' + packageDestin
+                                const packageDestin = responses.package_name.split('.').join('/')
+                                const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
 
-                            const pathMainOrigin = basePath + 'src/main/java/'
-                            const pathAndroidTestOrigin = basePath + 'src/androidTest/java/'
-                            const pathTestOrigin = basePath + 'src/test/java/'
+                                const pathMainDestin = basePath + 'src/main/java/' + packageDestin
+                                const pathAndroidTestDestin = basePath + 'src/androidTest/java/' + packageDestin
+                                const pathTestDestin = basePath + 'src/test/java/' + packageDestin
 
-                            fs.mkdirsSync(pathMainDestin)
-                            fs.mkdirsSync(pathAndroidTestDestin)
-                            fs.mkdirsSync(pathTestDestin)
+                                const pathMainOrigin = basePath + 'src/main/java/'
+                                const pathAndroidTestOrigin = basePath + 'src/androidTest/java/'
+                                const pathTestOrigin = basePath + 'src/test/java/'
 
-                            ncp(pathMainOrigin + packageOrigin, pathMainDestin, (error) => {
-                                fs.removeSync(pathMainOrigin + jsonManifest.manifest.package.split('.')[0])
+                                fs.mkdirsSync(pathMainDestin)
+                                fs.mkdirsSync(pathAndroidTestDestin)
+                                fs.mkdirsSync(pathTestDestin)
+
+                                ncp(pathMainOrigin + packageOrigin, pathMainDestin, (error) => {
+                                    fs.removeSync(pathMainOrigin + jsonManifest.manifest.package.split('.')[0])
+                                })
+
+                                ncp(pathAndroidTestOrigin + packageOrigin, pathAndroidTestDestin, (error) => {
+                                    fs.removeSync(pathAndroidTestOrigin + jsonManifest.manifest.package.split('.')[0]) 
+                                })
+
+                                ncp(pathTestOrigin + packageOrigin, pathTestDestin, (error) => {
+                                    fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])  
+                                })
+
+                                replace({
+                                    regex: jsonManifest.manifest.package,
+                                    replacement: responses.package_name,
+                                    paths: ['./templates'],
+                                    recursive: true,
+                                    silent: true,
+                                    });
+
                             })
-
-                            ncp(pathAndroidTestOrigin + packageOrigin, pathAndroidTestDestin, (error) => {
-                                fs.removeSync(pathAndroidTestOrigin + jsonManifest.manifest.package.split('.')[0]) 
-                            })
-
-                            ncp(pathTestOrigin + packageOrigin, pathTestDestin, (error) => {
-                                fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])  
-                            })
-
-                            replace({
-                                regex: jsonManifest.manifest.package,
-                                replacement: responses.package_name,
-                                paths: ['./templates'],
-                                recursive: true,
-                                silent: true,
-                                });
 
                         })
 
