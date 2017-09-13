@@ -1,7 +1,7 @@
 {
-  "name": "generator-android-architecture-with-templates",
+  "name": "generator-android-structure-community-based",
   "version": "0.1.0",
-  "description": "Criar aplicações utilizando templates",
+  "description": "Create android applications using community-based templates",
   "main": "app/index.js",
   "keywords": [
     "Android",
