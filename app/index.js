@@ -1,22 +1,79 @@
-var Generator = require('yeoman-generator');
-var fs = require('fs');
-var git = require('git-cli').Repository
-var repositoryService = require('./service/repository.js')
-var buildProjectAsks = require('./ask/build_project.js')
+const Generator = require('yeoman-generator');
+const fs = require('fs-extra')
+const git = require('git-cli').Repository
+const replace = require('replace');
+const glob = require("glob")
+const parser = require('xml2json')
+const ncp = require('ncp').ncp;
+const repositoryService = require('./service/repository.js')
+const buildProjectAsks = require('./ask/build_project.js')
+
 module.exports = class extends Generator {
 
     prompting() {
-        this.log("Contribua https://github.com/murijr/android-architecture-with-templates")
+        
+        this.log("Contribute https://github.com/murijr/android-architecture-with-templates")
+
         repositoryService.getPublicTemplates(
+
             (repository) => {
                 
                 buildProjectAsks.start(this, repository.templatesSimpleList).then((responses) => {
 
-                    var templateInfo = getTemplateSelectedInfo(responses.select_template_project, repository.templatesFullInfo)
+                    const templateInfo = getTemplateSelectedInfo(responses.select_template_project, repository.templatesFullInfo)
 
-                    fs.mkdir('./templates', () => {
+                    fs.removeSync('./templates')
+
+                    fs.mkdirSync('./templates')
                         
-                        git.clone(templateInfo.repository_url, './templates/' + responses.project_name)
+                    git
+                    .clone(templateInfo.repository_url, './templates/' + responses.project_name)
+                    .then(() => {
+
+                        glob("./templates/**/AndroidManifest.xml", null, function (er, files) {
+
+                            const basePath = files[0].split('src')[0]
+                            
+                            const manifestXml = fs.readFileSync(files[0])
+
+                            const jsonManifest = parser.toJson(manifestXml, {object: true});
+
+                            const packageDestin = responses.package_name.split('.').join('/')
+                            const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
+
+                            const pathMainDestin = basePath + 'src/main/java/' + packageDestin
+                            const pathAndroidTestDestin = basePath + 'src/androidTest/java/' + packageDestin
+                            const pathTestDestin = basePath + 'src/test/java/' + packageDestin
+
+                            const pathMainOrigin = basePath + 'src/main/java/'
+                            const pathAndroidTestOrigin = basePath + 'src/androidTest/java/'
+                            const pathTestOrigin = basePath + 'src/test/java/'
+
+                            fs.mkdirsSync(pathMainDestin)
+                            fs.mkdirsSync(pathAndroidTestDestin)
+                            fs.mkdirsSync(pathTestDestin)
+
+                            ncp(pathMainOrigin + packageOrigin, pathMainDestin, (error) => {
+                                fs.removeSync(pathMainOrigin + jsonManifest.manifest.package.split('.')[0])
+                            })
+
+                            ncp(pathAndroidTestOrigin + packageOrigin, pathAndroidTestDestin, (error) => {
+                                fs.removeSync(pathAndroidTestOrigin + jsonManifest.manifest.package.split('.')[0]) 
+                            })
+
+                            ncp(pathTestOrigin + packageOrigin, pathTestDestin, (error) => {
+                                fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])  
+                            })
+
+                            replace({
+                                regex: jsonManifest.manifest.package,
+                                replacement: responses.package_name,
+                                paths: ['./templates'],
+                                recursive: true,
+                                silent: true,
+                                });
+
+                        })
 
                     })
 
