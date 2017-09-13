@@ -24,17 +24,15 @@ module.exports = class extends Generator {
 
                     const templateBranchRepo = (templateInfo.repository_branch) ? templateInfo.repository_branch : 'master'
 
-                    fs.removeSync('./templates')
-
-                    fs.mkdirSync('./templates')
+                    fs.mkdirSync(this.contextRoot + '/' + responses.project_name)
                         
                     git
-                    .clone(templateInfo.repository_url, './templates/' + responses.project_name)
+                    .clone(templateInfo.repository_url, this.contextRoot + '/' + responses.project_name)
                     .then((gitRepo) => {
 
                         gitRepo.checkout(templateBranchRepo).then(() => {
 
-                            glob("./templates/**/AndroidManifest.xml", null, (er, files) => {
+                            glob(this.contextRoot + '/' + responses.project_name + "/**/AndroidManifest.xml", null, (er, files) => {
 
                                 const basePath = files[0].split('src')[0]
                                 
@@ -69,8 +67,6 @@ module.exports = class extends Generator {
 
                                             fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])
 
-                                            fs.moveSync('./templates/' + responses.project_name, this.contextRoot + '/' + responses.project_name)
-
                                         })
 
                                     })
@@ -80,7 +76,7 @@ module.exports = class extends Generator {
                                 replace({
                                     regex: jsonManifest.manifest.package,
                                     replacement: responses.package_name,
-                                    paths: ['./templates'],
+                                    paths: [this.contextRoot + '/' + responses.project_name],
                                     recursive: true,
                                     silent: true,
                                     });                                
