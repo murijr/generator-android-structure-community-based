@@ -1,6 +1,6 @@
 {
   "name": "generator-android-architecture-with-templates",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Criar aplicações utilizando templates",
   "main": "app/index.js",
   "keywords": [
