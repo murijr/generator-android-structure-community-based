@@ -5,12 +5,15 @@ module.exports
     unirest.get('https://raw.githubusercontent.com/murijr/android-templates-records/master/templates.json')
     .end((response) => {
 
-        var json = JSON.parse(response.body) 
-
-        actionSucess({
-            templatesSimpleList:   formattTemplateCollection(json.templates),
-            templatesFullInfo:  json.templates
-        })
+        try {
+            var json = JSON.parse(response.body)     
+            actionSucess({
+                templatesSimpleList:   formattTemplateCollection(json.templates),
+                templatesFullInfo:  json.templates
+            })
+        } catch (error) {
+            actionError(error)            
+        }
 
     })
 }

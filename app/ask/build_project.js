@@ -17,7 +17,7 @@ module.exports
                     if (input.length > 0 && !pathExists) {
                       return true;
                     }
-                    return 'Invalid Project name: ' + input + '. Try again.' ;
+                    return 'The project name may not be valid, or the name already exists.';
                 }            
             },{
                 name: "package_name",

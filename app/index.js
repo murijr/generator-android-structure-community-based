@@ -74,6 +74,8 @@ module.exports = class extends Generator {
 
                 })
 
+            },(error) => {
+                console.log('It was not possible to proceed. Check your internet connection.')
             }
 
         )
