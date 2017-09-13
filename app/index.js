@@ -43,35 +43,20 @@ module.exports = class extends Generator {
                                 const packageDestin = responses.package_name.split('.').join('/')
                                 const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
 
-                                const pathMainDestin = basePath + 'src/main/java/' + packageDestin
-                                const pathAndroidTestDestin = basePath + 'src/androidTest/java/' + packageDestin
-                                const pathTestDestin = basePath + 'src/test/java/' + packageDestin
+                                fs.readdir(basePath + 'src', function(err, dirs) {
+                                    dirs.forEach((dir) => {
 
-                                const pathMainOrigin = basePath + 'src/main/java/'
-                                const pathAndroidTestOrigin = basePath + 'src/androidTest/java/'
-                                const pathTestOrigin = basePath + 'src/test/java/'
+                                        const pathDestin = basePath + 'src/' + dir + '/java/' + packageDestin
+                                        const pathOrigin = basePath + 'src/' + dir + '/java/'
 
-                                fs.mkdirsSync(pathMainDestin)
-                                fs.mkdirsSync(pathAndroidTestDestin)
-                                fs.mkdirsSync(pathTestDestin)
+                                        fs.mkdirsSync(pathDestin)
 
-                                ncp(pathMainOrigin + packageOrigin, pathMainDestin, (error) => {
-
-                                    fs.removeSync(pathMainOrigin + jsonManifest.manifest.package.split('.')[0])
-
-                                    ncp(pathAndroidTestOrigin + packageOrigin, pathAndroidTestDestin, (error) => {
-
-                                        fs.removeSync(pathAndroidTestOrigin + jsonManifest.manifest.package.split('.')[0]) 
-
-                                        ncp(pathTestOrigin + packageOrigin, pathTestDestin, (error) => {
-
-                                            fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])
-
+                                        ncp(pathOrigin + packageOrigin, pathDestin, (error) => {                                            
+                                            fs.removeSync(pathOrigin + jsonManifest.manifest.package.split('.')[0])
                                         })
-
+                                            
                                     })
-    
-                                })
+                                });
 
                                 replace({
                                     regex: jsonManifest.manifest.package,
@@ -101,7 +86,7 @@ var  getTemplateSelectedInfo = (templateSelected, allTemplates) => {
     
     var templateInfo = null
 
-    allTemplates.forEach(function(template) {
+    allTemplates.forEach((template) => {
         
         if(template.title == templateSelected){
             templateInfo = template
