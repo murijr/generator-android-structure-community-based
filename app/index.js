@@ -58,15 +58,23 @@ module.exports = class extends Generator {
                                 fs.mkdirsSync(pathTestDestin)
 
                                 ncp(pathMainOrigin + packageOrigin, pathMainDestin, (error) => {
+
                                     fs.removeSync(pathMainOrigin + jsonManifest.manifest.package.split('.')[0])
-                                })
 
-                                ncp(pathAndroidTestOrigin + packageOrigin, pathAndroidTestDestin, (error) => {
-                                    fs.removeSync(pathAndroidTestOrigin + jsonManifest.manifest.package.split('.')[0]) 
-                                })
+                                    ncp(pathAndroidTestOrigin + packageOrigin, pathAndroidTestDestin, (error) => {
 
-                                ncp(pathTestOrigin + packageOrigin, pathTestDestin, (error) => {
-                                    fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])  
+                                        fs.removeSync(pathAndroidTestOrigin + jsonManifest.manifest.package.split('.')[0]) 
+
+                                        ncp(pathTestOrigin + packageOrigin, pathTestDestin, (error) => {
+
+                                            fs.removeSync(pathTestOrigin + jsonManifest.manifest.package.split('.')[0])
+
+                                            fs.moveSync('./templates/' + responses.project_name, this.contextRoot + '/' + responses.project_name)
+
+                                        })
+
+                                    })
+    
                                 })
 
                                 replace({
@@ -75,7 +83,7 @@ module.exports = class extends Generator {
                                     paths: ['./templates'],
                                     recursive: true,
                                     silent: true,
-                                    });
+                                    });                                
 
                             })
 
@@ -90,7 +98,7 @@ module.exports = class extends Generator {
         )
 
     }
-    
+
 };
 
 var  getTemplateSelectedInfo = (templateSelected, allTemplates) => {
