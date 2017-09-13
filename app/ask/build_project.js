@@ -1,3 +1,5 @@
+const fs = require('fs-extra')
+
 module.exports
 .start = (generator, templateList) => {
 
@@ -9,7 +11,10 @@ module.exports
                 message: "What is the name of the project ? ",
                 type: "input",
                 validate: function (input) {
-                    if (input.length > 0) {
+
+                    const pathExists = fs.existsSync(generator.contextRoot + '/' + input)
+
+                    if (input.length > 0 && !pathExists) {
                       return true;
                     }
                     return 'Invalid Project name: ' + input + '. Try again.' ;
