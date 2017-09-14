@@ -5,6 +5,7 @@ const replace = require('replace');
 const glob = require("glob")
 const parser = require('xml2json')
 const ncp = require('ncp').ncp;
+const yosay = require('yosay')
 const repositoryService = require('./service/repository.js')
 const buildProjectAsks = require('./ask/build_project.js')
 
@@ -12,7 +13,7 @@ module.exports = class extends Generator {
 
     prompting() {
         
-        this.log("Contribute https://github.com/murijr/android-architecture-with-templates")
+        this.log(yosay('Contribute to the project.\n GitHub: https://github.com/murijr/android-architecture-with-templates', {maxLength: 70}));
 
         repositoryService.getPublicTemplates(
 
@@ -75,7 +76,7 @@ module.exports = class extends Generator {
                 })
 
             },(error) => {
-                console.log('It was not possible to proceed. Check your internet connection.')
+                this.log('It was not possible to proceed. Check your network connection.')
             }
 
         )
