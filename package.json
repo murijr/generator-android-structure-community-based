@@ -4,13 +4,15 @@
   "description": "Create android applications using community-based templates",
   "main": "app/index.js",
   "keywords": [
-    "Android",
-    "Java",
-    "Architecture",
-    "yeoman-generator"
+    "yeoman-generator",
+    "kotlin",
+    "dagger",
+    "rx",
+    "android",
+    "architecture"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "author": "Amauri Rodrigues de Souza Jr",
   "license": "ISC",
