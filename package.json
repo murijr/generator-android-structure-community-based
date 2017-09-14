@@ -1,6 +1,6 @@
 {
   "name": "generator-android-structure-community-based",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Create android applications using community-based templates",
   "main": "app/index.js",
   "keywords": [
