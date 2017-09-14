@@ -13,7 +13,7 @@ module.exports = class extends Generator {
 
     prompting() {
         
-        this.log(yosay('Contribute to the project.\n GitHub: https://github.com/murijr/android-architecture-with-templates', {maxLength: 70}));
+        this.log(yosay('Contribute to the project.\n GitHub: https://github.com/murijr/generator-android-structure-community-based', {maxLength: 70}));
 
         repositoryService.getPublicTemplates(
 
