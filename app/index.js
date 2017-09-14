@@ -24,15 +24,15 @@ module.exports = class extends Generator {
 
                     const templateBranchRepo = (templateInfo.repository_branch) ? templateInfo.repository_branch : 'master'
 
-                    fs.mkdirSync(this.contextRoot + '/' + responses.project_name)
+                    fs.mkdirSync(this.env.cwd + '/' + responses.project_name)
                         
                     git
-                    .clone(templateInfo.repository_url, this.contextRoot + '/' + responses.project_name)
+                    .clone(templateInfo.repository_url, this.env.cwd + '/' + responses.project_name)
                     .then((gitRepo) => {
 
                         gitRepo.checkout(templateBranchRepo).then(() => {
 
-                            glob(this.contextRoot + '/' + responses.project_name + "/**/AndroidManifest.xml", null, (er, files) => {
+                            glob(this.env.cwd + '/' + responses.project_name + "/**/AndroidManifest.xml", null, (er, files) => {
 
                                 const basePath = files[0].split('src')[0]
                                 
@@ -61,7 +61,7 @@ module.exports = class extends Generator {
                                 replace({
                                     regex: jsonManifest.manifest.package,
                                     replacement: responses.package_name,
-                                    paths: [this.contextRoot + '/' + responses.project_name],
+                                    paths: [this.env.cwd + '/' + responses.project_name],
                                     recursive: true,
                                     silent: true,
                                     });                                
