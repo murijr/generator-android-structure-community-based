@@ -32,7 +32,7 @@ module.exports
             },{
                 name: "select_template_project",
                 message: "Which project template you want to use ?",
-                type: "rawlist",
+                type: "list",
                 choices: templateList
             }
 
