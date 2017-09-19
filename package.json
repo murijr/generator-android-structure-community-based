@@ -1,7 +1,7 @@
 {
   "name": "generator-android-structure-community-based",
-  "version": "0.2.6",
-  "description": "Create android applications using community-based templates",
+  "version": "0.2.7",
+  "description": "Build Android applications quickly by choosing from multiple architectures.",
   "main": "app/index.js",
   "keywords": [
     "yeoman-generator",
