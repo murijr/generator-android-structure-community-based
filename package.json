@@ -3,6 +3,9 @@
   "version": "0.2.14.1",
   "description": "Build Android applications quickly by choosing from multiple architectures.",
   "main": "app/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
   "keywords": [
     "yeoman-generator",
     "kotlin",
@@ -29,5 +32,10 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "mocha": "^3.5.3",
+    "yeoman-assert": "^3.0.0",
+    "yeoman-test": "^1.7.0"
   }
 }
