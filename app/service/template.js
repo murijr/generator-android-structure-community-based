@@ -1,7 +1,11 @@
-var unirest = require('unirest');
+const unirest = require('unirest')
+const remoteRepo = require('../repository/template.js')
 
 module.exports
 .getPublicTemplates = (actionSucess, actionError) => {
+
+    remoteRepo.cloneOrUpdateTemplates()
+
     unirest.get('https://raw.githubusercontent.com/murijr/android-templates-records/master/templates.json')
     .end((response) => {
 
@@ -18,7 +22,7 @@ module.exports
     })
 }
 
-var formattTemplateCollection = (templateArray) => {
+let formattTemplateCollection = (templateArray) => {
     var formatedArray = []
     templateArray.forEach(function(element) {        
         formatedArray.push(element.title)

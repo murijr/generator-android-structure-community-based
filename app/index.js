@@ -6,7 +6,7 @@ const glob = require("glob")
 const parser = require('xml2json')
 const ncp = require('ncp').ncp;
 const yosay = require('yosay')
-const repositoryService = require('./service/repository.js')
+const repositoryService = require('./service/template.js')
 const buildProjectAsks = require('./ask/build_project.js')
 
 module.exports = class extends Generator {
@@ -85,7 +85,7 @@ module.exports = class extends Generator {
 
 };
 
-var  getTemplateSelectedInfo = (templateSelected, allTemplates) => {
+let  getTemplateSelectedInfo = (templateSelected, allTemplates) => {
     
     var templateInfo = null
 
