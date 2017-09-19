@@ -29,5 +29,8 @@
   },
   "files": [
     "app"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
