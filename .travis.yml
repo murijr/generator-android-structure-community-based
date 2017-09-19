@@ -5,11 +5,9 @@ branches:
   only:
   - master
   - develop
-before_deploy: "start deploy"
 deploy:
   provider: npm
   email: $NPM_EMAIL
   api_key: $NPM_TOKEN
   on:
     branch: master
-before_deploy: "finish deploy"
