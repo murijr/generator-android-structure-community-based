@@ -12,5 +12,4 @@ deploy:
   api_key: $NPM_TOKEN
   on:
     branch: master
-    tags: true
 before_deploy: "finish deploy"
