@@ -11,9 +11,6 @@
     "android",
     "architecture"
   ],
-  "scripts": {
-    "test": ""
-  },
   "author": "Amauri Rodrigues de Souza Jr",
   "license": "MIT",
   "dependencies": {
