@@ -4,10 +4,11 @@ const fs = require('fs-extra')
 
 module.exports = {
 
-    destinationPath: '../tmp',    
+    destinationPath: '../tmp/',
+
+    templatesFile: 'templates.json',
 
     cloneOrUpdateTemplates: () => {
-
 
         return new Promise((sucess, error) => {
 
@@ -22,7 +23,7 @@ module.exports = {
     
                     gitRepo.checkout('master').then(() => {
                     
-                        sucess()
+                        sucess(module.exports.destinationPath + module.exports.templatesFile)
     
                     })
     
@@ -32,6 +33,25 @@ module.exports = {
 
         })
     
+    },
+
+    getTemplates: () => {
+
+        return new Promise((actionSucess, actionError) => {
+
+            module.exports.cloneOrUpdateTemplates().then((filePath) => {
+                
+                fs.readFile(filePath, (error, content) => {
+                    if(error)
+                        actionError(error)
+                    else    
+                        actionSucess(JSON.parse(content).templates)
+                })
+
+            })
+
+        })
+
     },
 
     verifyPathExists: (path) => {

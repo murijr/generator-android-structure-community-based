@@ -42,6 +42,7 @@ module.exports = class extends Generator {
                                 const jsonManifest = parser.toJson(manifestXml, {object: true});
 
                                 const packageDestin = responses.package_name.split('.').join('/')
+                                
                                 const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
 
                                 fs.readdir(basePath + 'src', function(err, dirs) {

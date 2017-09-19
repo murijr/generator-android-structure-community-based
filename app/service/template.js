@@ -4,22 +4,19 @@ const remoteRepo = require('../repository/template.js')
 module.exports
 .getPublicTemplates = (actionSucess, actionError) => {
 
-    remoteRepo.cloneOrUpdateTemplates()
-
-    unirest.get('https://raw.githubusercontent.com/murijr/android-templates-records/master/templates.json')
-    .end((response) => {
+    remoteRepo.getTemplates().then((templates) => {
 
         try {
-            var json = JSON.parse(response.body)     
             actionSucess({
-                templatesSimpleList:   formattTemplateCollection(json.templates),
-                templatesFullInfo:  json.templates
+                templatesSimpleList:   formattTemplateCollection(templates),
+                templatesFullInfo:  templates
             })
         } catch (error) {
             actionError(error)            
         }
 
     })
+
 }
 
 let formattTemplateCollection = (templateArray) => {
