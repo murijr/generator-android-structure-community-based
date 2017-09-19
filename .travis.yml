@@ -3,6 +3,7 @@ branches:
   only:
   - master
   - develop
+before_deploy: "start deploy"
 deploy:
   provider: npm
   email: $NPM_EMAIL
@@ -10,3 +11,4 @@ deploy:
   on:
     branch: master
     tags: true
+before_deploy: "finish deploy"
