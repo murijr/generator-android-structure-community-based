@@ -6,7 +6,7 @@ const glob = require("glob")
 const parser = require('xml2json')
 const ncp = require('ncp').ncp;
 const yosay = require('yosay')
-const repositoryService = require('./service/repository.js')
+const repositoryService = require('./service/template.js')
 const buildProjectAsks = require('./ask/build_project.js')
 
 module.exports = class extends Generator {
@@ -15,7 +15,7 @@ module.exports = class extends Generator {
         
         this.log(yosay('Contribute to the project.\n GitHub: https://github.com/murijr/generator-android-structure-community-based', {maxLength: 70}));
 
-        repositoryService.getPublicTemplates(
+        repositoryService.getTemplates(
 
             (repository) => {
                 
@@ -42,6 +42,7 @@ module.exports = class extends Generator {
                                 const jsonManifest = parser.toJson(manifestXml, {object: true});
 
                                 const packageDestin = responses.package_name.split('.').join('/')
+                                
                                 const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
 
                                 fs.readdir(basePath + 'src', function(err, dirs) {
@@ -85,7 +86,7 @@ module.exports = class extends Generator {
 
 };
 
-var  getTemplateSelectedInfo = (templateSelected, allTemplates) => {
+let  getTemplateSelectedInfo = (templateSelected, allTemplates) => {
     
     var templateInfo = null
 
