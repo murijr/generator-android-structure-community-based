@@ -15,7 +15,7 @@ module.exports = class extends Generator {
         
         this.log(yosay('Contribute to the project.\n GitHub: https://github.com/murijr/generator-android-structure-community-based', {maxLength: 70}));
 
-        repositoryService.getTemplates(
+        repositoryService.getTemplatesInfo(
 
             (repository) => {
                 

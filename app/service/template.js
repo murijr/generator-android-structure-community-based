@@ -3,7 +3,7 @@ const remoteRepo = require('../repository/template.js')
 
 module.exports = {
 
-    getTemplates: (actionSucess, actionError) => {
+    getTemplatesInfo: (actionSucess, actionError) => {
         
         remoteRepo.getTemplates().then((templates) => {
     
