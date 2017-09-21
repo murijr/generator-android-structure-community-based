@@ -29,13 +29,15 @@ module.exports = class extends Generator{
         
         console.log(yosay('Contribute to the project.\n GitHub: https://github.com/murijr/generator-android-structure-community-based', {maxLength: 70}));
 
+        console.log('The files will be generated in the directory ' + this.env.cwd)
+
         const prompts = [{
                 name: "project_name",
                 message: "What is the name of the project ? ",
                 type: "input",
                 validate: (input) => {
 
-                    const pathExists = fs.existsSync(this.contextRoot + '/' + input)
+                    const pathExists = fs.existsSync(this.env.cwd + '/' + input)
 
                     if (input.length > 0 && !pathExists) {
                     return true;
