@@ -1,6 +1,6 @@
 {
   "name": "generator-android-structure-community-based",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Build Android applications quickly by choosing from multiple architectures.",
   "main": "app/index.js",
   "repository": "https://github.com/murijr/generator-android-structure-community-based",
