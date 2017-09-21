@@ -1,4 +1,3 @@
-const unirest = require('unirest')
 const remoteRepo = require('../repository/template.js')
 
 module.exports = {
