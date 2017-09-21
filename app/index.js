@@ -56,7 +56,7 @@ module.exports = class extends Generator{
                 }            
             },{
                 name: "select_template_project",
-                message: "Which project template you want to use ?",
+                message: "What architecture do you want to use ? ",
                 type: "list",
                 choices: this.templatesRepository.templatesSimpleList
         }]
