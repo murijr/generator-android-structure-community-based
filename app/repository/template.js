@@ -1,14 +1,15 @@
 const git = require('git-cli').Repository
-const Promise = require("bluebird");
 const fs = require('fs-extra')
+const path = require('path');
+const appDir = path.dirname(__dirname);
 
 module.exports = {
 
-    destinationPath: '../tmp/',
+    destinationPath: appDir + '/tmp/',
 
     templatesFile: 'templates.json',
 
-    cloneOrUpdateTemplates: () => {
+    cloneOrUpdateTemplatesFile: () => {
 
         return new Promise((sucess, error) => {
 
@@ -35,11 +36,34 @@ module.exports = {
     
     },
 
+    cloneTemplateUsingTemplateInfo: (templateRepositoryUrl, templateBranch, destinationPath) => {
+        
+        return new Promise((actionSucess, actionError) => {
+
+            module.exports.verifyPathExists(destinationPath).then((exists) => {
+    
+                git.clone(templateRepositoryUrl, destinationPath)
+                .then((gitRepo) => {
+    
+                    gitRepo.checkout(templateBranch).then(() => {
+                    
+                        actionSucess()
+    
+                    })
+    
+                })
+    
+            })
+
+        })
+    
+    },
+
     getTemplates: () => {
 
         return new Promise((actionSucess, actionError) => {
 
-            module.exports.cloneOrUpdateTemplates().then((filePath) => {
+            module.exports.cloneOrUpdateTemplatesFile().then((filePath) => {
                 
                 fs.readFile(filePath, (error, content) => {
                     if(error)
