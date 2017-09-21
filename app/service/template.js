@@ -19,7 +19,13 @@ module.exports = {
         })
         
     },
-    
+
+    generateProject: (templateRepositoryUrl, templateBranch, destinationPath) => {
+
+        return remoteRepo.cloneTemplateUsingTemplateInfo(templateRepositoryUrl, templateBranch, destinationPath)
+
+    },
+
     formattTemplateCollection: (templateArray) => {
         var formatedArray = []
         templateArray.forEach(function(element) {        
@@ -29,4 +35,3 @@ module.exports = {
     }
         
 }
-
