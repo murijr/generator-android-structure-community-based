@@ -1,5 +1,4 @@
 const git = require('git-cli').Repository
-const Promise = require("bluebird");
 const fs = require('fs-extra')
 const path = require('path');
 const appDir = path.dirname(__dirname);

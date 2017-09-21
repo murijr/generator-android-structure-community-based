@@ -3,19 +3,23 @@ const remoteRepo = require('../repository/template.js')
 
 module.exports = {
 
-    getTemplatesInfo: (actionSucess, actionError) => {
+    getTemplatesInfo: () => {
+
+        return new Promise((actionSuccess, actionError) => {
+
+            remoteRepo.getTemplates().then((templates) => {
+                
+                try {
+                    actionSuccess({
+                        templatesSimpleList:   module.exports.formattTemplateCollection(templates),
+                        templatesFullInfo:  templates
+                    })
+                } catch (error) {
+                    actionError(error)            
+                }
         
-        remoteRepo.getTemplates().then((templates) => {
-    
-            try {
-                actionSucess({
-                    templatesSimpleList:   module.exports.formattTemplateCollection(templates),
-                    templatesFullInfo:  templates
-                })
-            } catch (error) {
-                actionError(error)            
-            }
-    
+            })
+
         })
         
     },
@@ -32,6 +36,22 @@ module.exports = {
             formatedArray.push(element.title)
         });
         return formatedArray
+    },
+
+    getTemplateSelectedInfo: (templateSelected, allTemplates) => {
+        
+        var templateInfo = null
+
+        allTemplates.forEach((template) => {
+            
+            if(template.title == templateSelected){
+                templateInfo = template
+            }
+
+        });
+
+        return templateInfo
+
     }
         
 }
