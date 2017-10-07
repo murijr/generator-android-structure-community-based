@@ -1,6 +1,6 @@
 {
   "name": "generator-android-structure-community-based",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "Build Android applications quickly by choosing from multiple architectures.",
   "main": "app/index.js",
   "repository": "https://github.com/murijr/generator-android-structure-community-based",
@@ -26,7 +26,6 @@
     "glob": "^7.1.2",
     "ncp": "^2.0.0",
     "replace": "^0.3.0",
-    "unirest": "^0.5.1",
     "xml2json": "^0.11.0",
     "yeoman-generator": "^1.1.1",
     "yosay": "^2.0.1"
