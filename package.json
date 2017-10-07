@@ -1,11 +1,14 @@
 {
   "name": "generator-android-structure-community-based",
-  "version": "0.5.5",
+  "version": "0.6.6",
   "description": "Build Android applications quickly by choosing from multiple architectures.",
   "main": "app/index.js",
   "repository": "https://github.com/murijr/generator-android-structure-community-based",
   "scripts": {
-    "test": "mocha --timeout 15000"
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">=8.6"
   },
   "keywords": [
     "yeoman-generator",
@@ -18,7 +21,6 @@
   "author": "Amauri Rodrigues de Souza Jr",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "fs-extra": "^4.0.2",
     "git-cli": "^0.10.0",
     "glob": "^7.1.2",
