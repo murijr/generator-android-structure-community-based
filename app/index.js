@@ -6,6 +6,7 @@ const glob = require("glob")
 const parser = require('xml2js').parseString
 const ncp = require('ncp').ncp;
 const repositoryService = require('./service/template.js')
+const validation = require('./validation.js')
 
 module.exports = class extends Generator{ 
 
@@ -32,34 +33,22 @@ module.exports = class extends Generator{
         console.log('The files will be generated in the directory ' + this.env.cwd)
 
         const prompts = [{
-                name: "project_name",
-                message: "What is the name of the project ? ",
-                type: "input",
-                validate: (input) => {
-
-                    const pathExists = fs.existsSync(this.env.cwd + '/' + input)
-
-                    if (input.length > 0 && !pathExists) {
-                    return true;
-                    }
-                    return 'The project name may not be valid, or the name already exists.';
-                }            
-            },{
-                name: "package_name",
-                message: "What is the name of the project package ? ",
-                type: "input",
-                validate: (input) => {
-                    if (input.length > 0) {
-                        return true;
-                    }
-                    return 'Invalid Package name: ' + input + '. Try again.' ;
-                }            
-            },{
-                name: "select_template_project",
-                message: "What architecture do you want to use ? ",
-                type: "list",
-                choices: this.templatesRepository.templatesSimpleList
-        }]
+                    name: "project_name",
+                    message: "What is the name of the project ? ",
+                    type: "input",
+                    validate: validation.projectName
+                } 
+                ,{
+                    name: "package_name",
+                    message: "What is the name of the project package ? ",
+                    type: "input",
+                    validate: validation.packageName             
+                },{
+                    name: "select_template_project",
+                    message: "What architecture do you want to use ? ",
+                    type: "list",
+                    choices: this.templatesRepository.templatesSimpleList
+                }]
 
         return this.prompt(prompts).then((responses) => {
 
