@@ -3,7 +3,7 @@ const yosay = require('yosay')
 const fs = require('fs-extra')
 const replace = require('replace');
 const glob = require("glob")
-const parser = require('xml2json')
+const parser = require('xml2js').parseString
 const ncp = require('ncp').ncp;
 const repositoryService = require('./service/template.js')
 
@@ -86,39 +86,43 @@ module.exports = class extends Generator{
                 
                 const manifestXml = fs.readFileSync(files[0])
 
-                const jsonManifest = parser.toJson(manifestXml, {object: true});
+                parser(manifestXml, (err, jsonManifest) => {
 
-                const packageDestin = this.responses.package_name.split('.').join('/')
-                
-                const packageOrigin = jsonManifest.manifest.package.split('.').join('/')
+                    jsonManifest = jsonManifest.manifest.$
 
-                fs.readdir(basePath + 'src', function(err, dirs) {
+                    const packageDestin = this.responses.package_name.split('.').join('/')
 
-                    dirs.forEach((dir) => {
+                    const packageOrigin = jsonManifest.package.split('.').join('/')
 
-                        const pathDestin = basePath + 'src/' + dir + '/java/' + packageDestin
+                    fs.readdir(basePath + 'src', function(err, dirs) {
 
-                        const pathOrigin = basePath + 'src/' + dir + '/java/'
+                        dirs.forEach((dir) => {
 
-                        fs.mkdirsSync(pathDestin)
+                            const pathDestin = basePath + 'src/' + dir + '/java/' + packageDestin
 
-                        ncp(pathOrigin + packageOrigin, pathDestin, (error) => {         
+                            const pathOrigin = basePath + 'src/' + dir + '/java/'
 
-                            fs.removeSync(pathOrigin + jsonManifest.manifest.package.split('.')[0])
+                            fs.mkdirsSync(pathDestin)
 
+                            ncp(pathOrigin + packageOrigin, pathDestin, (error) => {         
+
+                                fs.removeSync(pathOrigin + jsonManifest.package.split('.')[0])
+
+                            })
+                                
                         })
-                            
-                    })
 
-                });
+                    });
 
-                replace({
-                    regex: jsonManifest.manifest.package,
-                    replacement: this.responses.package_name,
-                    paths: [this.env.cwd + '/' + this.responses.project_name],
-                    recursive: true,
-                    silent: true,
-                });                                
+                    replace({
+                        regex: jsonManifest.package,
+                        replacement: this.responses.package_name,
+                        paths: [this.env.cwd + '/' + this.responses.project_name],
+                        recursive: true,
+                        silent: true,
+                    })                                
+
+                })
 
             })
 
