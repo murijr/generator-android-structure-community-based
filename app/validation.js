@@ -7,10 +7,10 @@ module.exports = {
         const pathExists = fs.existsSync(path + '/' + input)
         
         if (input.length > 0 && !pathExists) {
-            return true;
+            return true
         }
 
-        return 'The project name may not be valid, or the name already exists.';
+        return 'The project name may not be valid, or the name already exists.'
         
     },
 
@@ -18,11 +18,11 @@ module.exports = {
 
         if (input.length > 0) {
 
-            return true;
+            return true
 
         }
 
-        return 'Invalid Package name: ' + input + '. Try again.' ;
+        return 'Invalid Package name: ' + input + '. Try again.'
         
     }
         
