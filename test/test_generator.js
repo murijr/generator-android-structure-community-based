@@ -5,7 +5,7 @@ const y_assert = require('yeoman-assert');
 const assert = require('assert');
 const repositoryService = require('../app/service/template.js')
 
-describe('generator:app', () => {
+describe('generator:app', (selectedTemplate) => {
 
     before((done) => {
 
@@ -13,7 +13,7 @@ describe('generator:app', () => {
         .withPrompts({
             project_name: 'SampleApp',
             package_name: 'com.sample.app',
-            select_template_project: 'Android Kotlin MVP Starter'
+            select_template_project: "Google MVP + Clean Architecture"
         })
         .on('end', done)
         
@@ -27,13 +27,13 @@ describe('generator:app', () => {
 
     it('should have created the packages', (done) => {
 
-        setTimeout(() =>{
+        setTimeout(() => {
 
             assert.ok(fs.pathExistsSync('./SampleApp/app/src/main/java/com/sample/app'))
 
             done()
 
-        }, 3000)
+        }, 5000)
 
     })
 
