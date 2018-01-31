@@ -2,25 +2,9 @@ const remoteRepo = require('../repository/template.js')
 
 module.exports = {
 
-    getTemplatesInfo: () => {
-
-        return new Promise((actionSuccess, actionError) => {
-
-            remoteRepo.getTemplates().then((templates) => {
-                
-                try {
-                    actionSuccess({
-                        templatesSimpleList:   module.exports.formattTemplateCollection(templates),
-                        templatesFullInfo:  templates
-                    })
-                } catch (error) {
-                    actionError(error)            
-                }
-        
-            })
-
-        })
-        
+    getTemplatesInfo: async () => {
+        const templates = await remoteRepo.getTemplates()
+        return {templatesSimpleList: module.exports.formattTemplateCollection(templates), templatesFullInfo: templates}
     },
 
     generateProject: (templateRepositoryUrl, templateBranch, destinationPath) => {

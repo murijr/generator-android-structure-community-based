@@ -69,6 +69,12 @@ module.exports = class extends Generator{
         repositoryService.generateProject(templateInfo.repository_url, templateBranchRepo, this.env.cwd + '/' + this.responses.project_name)
         .then(() => {
 
+            if(null != templateInfo.project_dir || undefined != templateInfo.project_dir){
+                                    
+                fs.moveSync(this.env.cwd + '/' + this.responses.project_name + '/' + templateInfo.project_dir, this.env.cwd + '/' + this.responses.project_name)
+
+            }
+
             glob(this.env.cwd + '/' + this.responses.project_name + "/**/AndroidManifest.xml", null, (er, files) => {
 
                 const basePath = files[0].split('src')[0]
